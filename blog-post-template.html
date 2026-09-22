@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       PAGE TITLE — format: "Post Title — ONSCIA Journal"
+       ============================================================ -->
+  <title>The art of returning to stillness — ONSCIA Journal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       GLOBAL RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #0d0b08;
+      color: #e0d5c5;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       LOGO COMPONENT (shared with main site)
+       ============================================================ */
+    /* logo sizing handled by .logo-img rules */
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      background-color: rgba(13, 11, 8, 0.96);
+      border-bottom: 1px solid #1e1a14;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #c9bfaf;
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #e8ddd0; }
+    .nav-center { flex: 1; text-align: center; }
+
+    /* ============================================================
+       POST HERO — full-width title area
+       To add a background image:
+         Replace the gradient in #post-hero with:
+         background-image: url('your-post-image.jpg');
+         and keep the ::before overlay.
+       ============================================================ */
+    #post-hero {
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 60px 0 80px;
+      background-image:
+        radial-gradient(ellipse at 60% 10%, rgba(150, 95, 25, 0.3) 0%, transparent 55%),
+        linear-gradient(180deg, #0d0b08 0%, #1a1308 50%, #0d0b08 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    #post-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(13,11,8,0.3) 0%, rgba(13,11,8,0.75) 100%);
+      pointer-events: none;
+    }
+
+    .post-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 48px;
+      width: 100%;
+    }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #6a5e4e;
+      text-decoration: none;
+      margin-bottom: 36px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #c9bfaf; }
+    .back-link svg { transition: transform 0.3s; }
+    .back-link:hover svg { transform: translateX(-4px); }
+
+    /* ── POST CATEGORY — edit text here ── */
+    .post-category {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.63rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #7a6e5e;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .post-category::after {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: #4a4438;
+    }
+
+    /* ── POST TITLE — edit text here ── */
+    .post-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 3.4rem;
+      color: #e8ddd0;
+      line-height: 1.12;
+      margin-bottom: 28px;
+      max-width: 640px;
+    }
+
+    /* ── POST META (date + author) — edit text here ── */
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: #5a5044;
+    }
+    .post-meta-divider {
+      width: 1px;
+      height: 12px;
+      background: #3a3228;
+    }
+
+    /* ============================================================
+       ARTICLE BODY
+       ============================================================ */
+    #post-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 72px 48px 96px;
+    }
+
+    /* ── LEAD PARAGRAPH (first paragraph, larger) ── */
+    .post-lead {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.45rem;
+      line-height: 1.65;
+      color: #c9bfaf;
+      margin-bottom: 40px;
+    }
+
+    /* ── BODY PARAGRAPHS — edit content here ── */
+    .post-body p {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #9a8f7e;
+      margin-bottom: 28px;
+    }
+
+    /* ── SUBHEADINGS — edit content here ── */
+    .post-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.9rem;
+      color: #d8ccbc;
+      line-height: 1.2;
+      margin: 52px 0 20px;
+    }
+
+    .post-body h3 {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #6a5e4e;
+      margin: 40px 0 16px;
+    }
+
+    /* ── PULL QUOTE — edit content here ── */
+    .post-body blockquote {
+      border-left: none;
+      margin: 52px 0;
+      padding: 32px 40px;
+      background-color: #100e0b;
+      border-top: 1px solid #2e2820;
+      border-bottom: 1px solid #2e2820;
+      position: relative;
+    }
+
+    .post-body blockquote::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      color: #2e2820;
+      position: absolute;
+      top: 8px;
+      left: 32px;
+      line-height: 1;
+    }
+
+    .post-body blockquote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.5rem;
+      line-height: 1.5;
+      color: #c9bfaf;
+      margin-bottom: 0;
+      padding-left: 16px;
+    }
+
+    /* ── IMAGE BLOCK — swap src with your image ── */
+    .post-image {
+      margin: 52px -48px;
+      position: relative;
+    }
+
+    .post-image img {
+      width: calc(100% + 96px);
+      max-width: none;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+    }
+
+    /* ── IMAGE CAPTION — edit text here ── */
+    .post-image figcaption {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: #4a4438;
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    /* Horizontal rule between sections */
+    .post-divider {
+      border: none;
+      border-top: 1px solid #1e1a14;
+      margin: 52px 0;
+    }
+
+    /* ============================================================
+       POST FOOTER — next/prev + back to journal
+       ============================================================ */
+    #post-nav {
+      border-top: 1px solid #1e1a14;
+      padding: 56px 48px;
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .post-nav-item {
+      text-decoration: none;
+      max-width: 280px;
+    }
+
+    .post-nav-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #4a4438;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── PREV/NEXT POST TITLES — edit hrefs and titles here ── */
+    .post-nav-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: #7a6e5e;
+      line-height: 1.3;
+      transition: color 0.3s;
+    }
+
+    .post-nav-item:hover .post-nav-title { color: #d8ccbc; }
+
+    .post-nav-center {
+      text-align: center;
+    }
+
+    /* ============================================================
+       FOOTER (shared with main site)
+       ============================================================ */
+    footer {
+      background-color: #0a0806;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #1e1a14;
+    }
+
+    .footer-line {
+      height: 1px;
+      background: #2e2820;
+      width: 80px;
+    }
+
+    .footer-center { flex: 1; display: flex; justify-content: center; }
+    .logo-footer { color: #7a6e5e; }
+    .logo-footer .logo-wordmark { font-size: 1.55rem; }
+    .logo-footer .logo-needle svg { height: 1.75rem; width: 0.33rem; }
+
+    .footer-icons { display: flex; gap: 18px; align-items: center; }
+    .footer-icons a { color: #6a5e4e; transition: color 0.3s; text-decoration: none; }
+    .footer-icons a:hover { color: #d8ccbc; }
+    .footer-icons svg {
+      width: 18px; height: 18px;
+      fill: none; stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { gap: 20px; }
+      .post-hero-content { padding: 0 24px; }
+      .post-title { font-size: 2.2rem; }
+      #post-body { padding: 48px 24px 72px; }
+      .post-image { margin: 40px -24px; }
+      .post-image img { width: calc(100% + 48px); height: 280px; }
+      #post-nav { flex-direction: column; padding: 40px 24px; gap: 32px; }
+      .post-nav-item { max-width: 100%; }
+      footer { flex-direction: column; gap: 24px; }
+    }
+
+    .logo-img {
+      mix-blend-mode: screen;
+      object-fit: contain;
+      display: block;
+    }
+    .logo-img.logo-nav {
+      width: 120px;
+      height: auto;
+    }
+    .logo-img.logo-footer {
+      width: 160px;
+      height: auto;
+      opacity: 0.65;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION — same as main site
+       ============================================================ -->
+  <nav>
+    <ul class="nav-links">
+      <li><a href="onscia.html">Home</a></li>
+      <li><a href="onscia.html#philosophy">About</a></li>
+      <li><a href="onscia.html#principles">Practice</a></li>
+    </ul>
+
+    <div class="nav-center">
+      <a href="onscia.html" style="text-decoration:none;">
+        <img src="images/OnsciaLogo-Black.jpg" alt="ONSCIA" class="logo-img logo-nav">
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="onscia.html#journal">Journal</a></li>
+      <li><a href="onscia.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ============================================================
+       POST HERO
+       To add a background photo: in CSS find "#post-hero" and
+       replace background-image with: url('your-image.jpg')
+       ============================================================ -->
+  <section id="post-hero">
+    <div class="post-hero-content">
+
+      <!-- Back to journal -->
+      <a href="onscia.html#journal" class="back-link">
+        <svg width="18" height="10" viewBox="0 0 18 10" fill="none">
+          <line x1="18" y1="5" x2="2" y2="5" stroke="currentColor" stroke-width="1.1"/>
+          <polyline points="7,0 2,5 7,10" stroke="currentColor" stroke-width="1.1" fill="none"/>
+        </svg>
+        Journal
+      </a>
+
+      <!-- ── POST CATEGORY — edit text here ── -->
+      <p class="post-category">Practice</p>
+
+      <!-- ── POST TITLE — edit text here ── -->
+      <h1 class="post-title">The art of returning to stillness</h1>
+
+      <!-- ── POST META — edit date and author here ── -->
+      <div class="post-meta">
+        <span>September 2026</span>
+        <div class="post-meta-divider"></div>
+        <span>5 min read</span>
+        <div class="post-meta-divider"></div>
+        <span>By Onscia</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ARTICLE BODY
+       Structure: lead → paragraphs → subheadings → blockquotes
+       All text inside this section is editable content.
+       ============================================================ -->
+  <article id="post-body" class="post-body">
+
+    <!-- ── LEAD PARAGRAPH — the opening, larger text ── -->
+    <p class="post-lead">
+      In a world that prizes constant motion, there is a quiet courage
+      in choosing to pause. Not to escape, but to arrive — fully —
+      in the one place we so rarely visit: the present moment.
+    </p>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      We often think of stillness as something we must achieve, a destination
+      we arrive at after we have quieted the mind, slowed the breath, released
+      the tension held in the shoulders. But this framing places stillness at
+      the end of a long corridor of effort, always just out of reach.
+    </p>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      What if stillness is not something we find, but something we remember?
+      It is not absent from our days — it is simply covered over. Beneath the
+      noise of schedules and demands, beneath even the internal chatter, there
+      is a quiet that has always been there. The practice is not to create it,
+      but to notice it.
+    </p>
+
+    <hr class="post-divider" />
+
+    <!-- ── SUBHEADING — edit text here ── -->
+    <h2>The body as doorway</h2>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      One of the most accessible entrances to stillness is through the body
+      itself. Not by forcing it into particular shapes, but by listening to
+      what it already holds. Tension in the jaw. A shallow breath. The faint
+      hum of unexpressed feeling held in the chest. These are not problems
+      to be solved — they are signals, invitations to pay attention.
+    </p>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      In our practice, we often begin not with movement but with arrival.
+      A few minutes of simply sitting, feeling the weight of the body, the
+      texture of the breath. Nothing is required of you in this moment except
+      to be here. It sounds simple. For most of us, it is among the hardest
+      things we do.
+    </p>
+
+    <!-- ── PULL QUOTE — edit text here ── -->
+    <blockquote>
+      <p>
+        Stillness is not the absence of movement. It is movement's
+        deepest quality — present even in the most vigorous practice.
+      </p>
+    </blockquote>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      This is not about achieving a particular state in meditation. It is
+      about developing a relationship with what is already here. The breath
+      has been with you your entire life. So has the capacity to pause.
+      What changes is your willingness to notice.
+    </p>
+
+    <!-- ── IMAGE BLOCK
+         Replace the gradient div with an actual <img> tag:
+         <figure class="post-image">
+           <img src="your-image.jpg" alt="description" />
+           <figcaption>Your caption here</figcaption>
+         </figure>
+         ── -->
+    <figure class="post-image">
+      <div style="width:100%;height:420px;background:radial-gradient(ellipse at 40% 60%, rgba(180,110,30,0.35) 0%, transparent 60%), linear-gradient(135deg,#1a1208 0%,#0d0a06 100%);"></div>
+      <!-- ── IMAGE CAPTION — edit text here ── -->
+      <figcaption>Morning practice, natural light</figcaption>
+    </figure>
+
+    <!-- ── SUBHEADING — edit text here ── -->
+    <h2>Returning, again and again</h2>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      There is a misunderstanding at the heart of most wellness culture:
+      that the goal is to reach a permanent state of peace. That once you
+      have found your centre, you will not lose it again. This is not how
+      it works. The mind wanders. That is not failure — that is the nature
+      of the mind.
+    </p>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      The practice is not to stop wandering. It is to notice when you have
+      wandered, and to return. Gently. Without drama. The returning is the
+      practice. Not the staying. And each time you return, you are building
+      something — a quiet familiarity with the steadiness that was always
+      underneath.
+    </p>
+
+    <!-- ── SMALL LABEL SUBHEADING — edit text here ── -->
+    <h3>A note on practice</h3>
+
+    <!-- ── BODY PARAGRAPH — edit text here ── -->
+    <p>
+      You do not need a dedicated space, a particular time, or a long
+      session. You need only the willingness to pause, for even a moment,
+      and to feel what is here. The body on the chair. The sound of the
+      room. The breath, moving on its own. Start there.
+    </p>
+
+  </article>
+
+
+  <!-- ============================================================
+       POST NAVIGATION — previous and next post links
+       Edit the href and title for each link.
+       Remove the block you don't need (e.g., no "previous" on
+       the first post).
+       ============================================================ -->
+  <nav id="post-nav" aria-label="Post navigation">
+
+    <!-- ── PREVIOUS POST — edit href and title here ── -->
+    <a class="post-nav-item" href="blog-post-3.html">
+      <p class="post-nav-label">
+        <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
+          <line x1="14" y1="4" x2="2" y2="4" stroke="currentColor" stroke-width="1"/>
+          <polyline points="6,0 2,4 6,8" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+        Previous
+      </p>
+      <p class="post-nav-title">Breath is not a technique</p>
+    </a>
+
+    <!-- Back to all posts -->
+    <div class="post-nav-center">
+      <a href="onscia.html#journal" class="back-link" style="margin-bottom:0;">
+        All posts
+      </a>
+    </div>
+
+    <!-- ── NEXT POST — edit href and title here ── -->
+    <a class="post-nav-item" href="blog-post-2.html" style="text-align:right;">
+      <p class="post-nav-label" style="justify-content:flex-end;">
+        Next
+        <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
+          <line x1="0" y1="4" x2="12" y2="4" stroke="currentColor" stroke-width="1"/>
+          <polyline points="8,0 12,4 8,8" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+      </p>
+      <p class="post-nav-title">Movement as a form of listening</p>
+    </a>
+
+  </nav>
+
+
+  <!-- ============================================================
+       FOOTER — same as main site
+       ============================================================ -->
+  <footer>
+    <div class="footer-line"></div>
+
+    <div class="footer-center">
+      <a href="onscia.html" style="text-decoration:none;">
+        <img src="images/OnsciaLogo-Black.jpg" alt="ONSCIA" class="logo-img logo-footer">
+      </a>
+    </div>
+
+    <!-- ── SOCIAL ICONS — replace href="#" with real URLs ── -->
+    <div class="footer-icons">
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="mailto:hello@onscia.com" aria-label="Email">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
