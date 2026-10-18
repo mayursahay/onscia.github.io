@@ -970,39 +970,68 @@
   <section id="contact">
     <div class="contact-inner">
 
-      <!-- ── CONTACT HEADING — edit text here ── -->
       <h2 class="contact-heading">Let's connect.</h2>
-
-      <!-- ── CONTACT SUBTEXT — edit text here ── -->
       <p class="contact-subtext">Questions, collaborations, or simply a hello.</p>
 
-      <form class="contact-form" onsubmit="return false;">
+      <form class="contact-form" id="gform" onsubmit="return submitContactForm(event);">
 
-        <!-- ── FIELD: NAME — edit label here ── -->
         <div class="contact-field">
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" autocomplete="off" />
         </div>
 
-        <!-- ── FIELD: EMAIL — edit label here ── -->
         <div class="contact-field">
           <label for="contact-email">Email</label>
           <input type="email" id="contact-email" name="email" autocomplete="off" />
         </div>
 
-        <!-- ── FIELD: MESSAGE — edit label here ── -->
+        <div class="contact-field">
+          <label for="contact-phone">Phone</label>
+          <input type="tel" id="contact-phone" name="phone" autocomplete="off" />
+        </div>
+
         <div class="contact-field">
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" rows="3"></textarea>
         </div>
 
-        <!-- ── SUBMIT BUTTON — edit label here ── -->
         <button class="contact-submit" type="submit">Send</button>
+        <p id="contact-status" style="display:none;"></p>
 
       </form>
     </div>
   </section>
 
+  <script>
+    function submitContactForm(e) {
+      e.preventDefault();
+
+      const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf8zsv4TCjwZAfxk_ZTwkm3sOHNmoNUltrPB-tPdByUQZyLvA/formResponse";
+
+      const data = new FormData();
+      data.append("entry.2005620554", document.getElementById("contact-name").value);
+      data.append("entry.1045781291", document.getElementById("contact-email").value);
+      data.append("entry.1166974658", document.getElementById("contact-phone").value);
+      data.append("entry.839337160", document.getElementById("contact-message").value);
+
+      fetch(GOOGLE_FORM_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: data
+      }).then(() => {
+        document.getElementById("gform").reset();
+        const status = document.getElementById("contact-status");
+        status.textContent = "Thanks — your message was sent.";
+        status.style.display = "block";
+      }).catch(() => {
+        const status = document.getElementById("contact-status");
+        status.textContent = "Something went wrong. Please try again.";
+        status.style.display = "block";
+      });
+
+      return false;
+    }
+  </script>
 
   <footer id="footer">
 
